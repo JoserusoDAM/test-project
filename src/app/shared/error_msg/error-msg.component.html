@@ -1,0 +1,93 @@
+<div
+  class="invalid-feedback d-block"
+  *ngIf="
+    control?.hasError('required') &&
+    control?.invalid &&
+    (control?.touched || control?.dirty)
+  "
+>
+  Este campo es requerido.
+</div>
+
+<div
+  class="invalid-feedback d-block"
+  *ngIf="
+    control?.hasError('email') &&
+    control?.invalid &&
+    (control?.touched || control?.dirty)
+  "
+>
+  Correo electrónico inválido.
+</div>
+
+<div
+  class="invalid-feedback d-block"
+  *ngIf="
+    control?.hasError('minlength') &&
+    control?.invalid &&
+    (control?.touched || control?.dirty)
+  "
+>
+  Este campo debe tener al menos
+  {{ control?.errors?.['minlength'].requiredLength }} caracteres pero tiene
+  {{ control?.errors?.['minlength'].actualLength }} carácter/es.
+</div>
+
+<div
+  class="invalid-feedback d-block"
+  *ngIf="
+    control?.hasError('maxlength') &&
+    control?.invalid &&
+    (control?.touched || control?.dirty)
+  "
+>
+  Este campo debe tener como máximo
+  {{ control?.errors?.['maxlength'].requiredLength }} caracteres pero tiene
+  {{ control?.errors?.['maxlength'].actualLength }} carácter/es.
+</div>
+
+<div
+  class="invalid-feedback d-block"
+  *ngIf="
+    control?.hasError('min') &&
+    control?.invalid &&
+    (control?.touched || control?.dirty)
+  "
+>
+  Este campo debe tener superior a {{ control?.errors?.['min'].min }}.
+</div>
+
+<div
+  class="invalid-feedback d-block"
+  *ngIf="
+    control?.hasError('customError') &&
+    control?.invalid &&
+    (control?.touched || control?.dirty)
+  "
+>
+  Custom error.
+</div>
+
+<div
+  class="invalid-feedback d-block"
+  *ngIf="
+    control?.hasError('invalidName') &&
+    control?.invalid &&
+    (control?.touched || control?.dirty)
+  "
+>
+  Nombre de usuario inválido.
+</div>
+
+<div
+  class="invalid-feedback d-block"
+  *ngIf="
+    control?.hasError('passwordStrength') &&
+    control?.invalid &&
+    (control?.touched || control?.dirty)
+  "
+>
+  La contraseña debe tener: mayúsculas, minúsculas , números y al más de
+  {{control?.errors?.['passwordStrength'].requiredLength}} caracteres, y tiene
+  {{ control?.value.length }} carácter/res.
+</div>

@@ -1,0 +1,25 @@
+<fieldset [formGroup]="form">
+  <legend class="">Alumno</legend>
+
+  <div class="form-row mb-3">
+    <label for="name">Nombre</label>
+    <input
+      type="text"
+      formControlName="name"
+      class="form-control"
+      placeholder="Nombre"
+      id="name"
+    />
+  </div>
+
+  <div class="form-row mb-3">
+    <label for="grade">Curso</label>
+    <input
+      type="text"
+      formControlName="grade"
+      class="form-control"
+      placeholder="Curso"
+      id="grade"
+    />
+  </div>
+</fieldset>

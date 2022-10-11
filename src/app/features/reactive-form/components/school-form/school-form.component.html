@@ -1,0 +1,16 @@
+<div class="container mb-5">
+  <h1>Formulario Escolar</h1>
+  <form [formGroup]="form" (ngSubmit)="onSubmit()">
+    <app-student-section [form]="studentForm"></app-student-section>
+    <app-teacher-section [form]="teacherForm"></app-teacher-section>
+
+    <div class="actions-buttons">
+      <button type="button" class="btn btn-primary" (click)="fillForm()">
+        Rellenar formulario
+      </button>
+      <button class="btn btn-primary">Enviar</button>
+    </div>
+  </form>
+
+  {{ form.value | json }}
+</div>

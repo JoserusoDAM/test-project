@@ -1,0 +1,203 @@
+<div class="container">
+  <h1>Reactive Forms</h1>
+  <form [formGroup]="form" (ngSubmit)="onSubmit()">
+    <div class="form-row">
+      <div class="col-md-4 mb-3">
+        <label for="validationCustom01" class="required">Nombre</label>
+        <input
+          type="text"
+          class="form-control"
+          id="validationCustom01"
+          placeholder="Nombre"
+          formControlName="name"
+        />
+        <app-error-msg [control]="nameControl"></app-error-msg>
+      </div>
+      <div class="col-md-4 mb-3">
+        <label for="validationCustom02" class="required">Apellidos</label>
+        <input
+          type="text"
+          class="form-control"
+          id="validationCustom02"
+          placeholder="Apellidos"
+          formControlName="lastName"
+        />
+        <app-error-msg [control]="lastNameControl"></app-error-msg>
+      </div>
+      <div class="col-md-4 mb-3">
+        <label for="validationCustomUsername" class="required"
+          >Nombre de usuario</label
+        >
+        <div class="input-group">
+          <div class="input-group-prepend">
+            <span class="input-group-text" id="inputGroupPrepend">@</span>
+          </div>
+          <input
+            type="mail"
+            class="form-control"
+            id="validationCustomUsername"
+            placeholder="Nombre de usuario"
+            aria-describedby="inputGroupPrepend"
+            formControlName="userName"
+          />
+        </div>
+        <app-error-msg [control]="userNameControl"></app-error-msg>
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="col-md-6 mb-3">
+        <label for="validationCustom03">Ciudad</label>
+        <input
+          type="text"
+          class="form-control"
+          id="validationCustom03"
+          placeholder="Ciudad"
+          formControlName="city"
+        />
+      </div>
+      <div class="col-md-3 mb-3">
+        <label for="exampleFormControlSelect1" class="required"
+          >Seleccione el país</label
+        >
+        <select
+          class="custom-select"
+          id="exampleFormControlSelect1"
+          formControlName="country"
+        >
+          <option value="" disabled>Seleccione un país</option>
+          <option *ngFor="let country of countries">
+            {{ country }}
+          </option>
+        </select>
+
+        <app-error-msg [control]="countryControl"></app-error-msg>
+      </div>
+      <div class="col-md-3 mb-3">
+        <label for="validationCustom05">Código Postal</label>
+        <input
+          type="number"
+          class="form-control"
+          id="validationCustom05"
+          placeholder="Código postal"
+          formControlName="zip"
+        />
+      </div>
+    </div>
+    <div class="form-group">
+      <div class="form-check">
+        <div class="d-flex align-items-center">
+          <input
+            class="form-check-input"
+            type="checkbox"
+            value="yes"
+            id="invalidCheck"
+            formControlName="terms"
+          />
+          <label class="form-check-label required" for="invalidCheck">
+            Agree to terms and conditions
+          </label>
+        </div>
+
+        <app-error-msg [control]="termsControl"></app-error-msg>
+      </div>
+    </div>
+
+    <div>
+      <div class="form-group" formArrayName="extraInfo">
+        <div class="" *ngFor="let group of extraInfo.controls; let i = index">
+          <fieldset class="" [formGroupName]="i">
+            <div>
+              <label for="title" class="required"> Título </label>
+              <input
+                class="form-control"
+                type="text"
+                id="title"
+                formControlName="title"
+                placeholder="Título"
+              />
+              <app-error-msg [control]="group.get('title')"></app-error-msg>
+            </div>
+            <div class="mt-2">
+              <label for="level"> Nivel </label>
+              <span> : {{ group.get("level")?.value }}</span>
+
+              <input
+                class="form-control p-0"
+                type="range"
+                id="level"
+                formControlName="level"
+              />
+            </div>
+          </fieldset>
+          <button
+            class="btn btn-danger my-2"
+            type="button"
+            (click)="removeExtraInfo(i)"
+          >
+            Eliminar
+          </button>
+        </div>
+      </div>
+
+      <button
+        class="btn btn-success mb-3"
+        type="button"
+        (click)="addExtraInfo()"
+      >
+        Añadir información adicional
+      </button>
+    </div>
+    <button
+      class="btn btn-primary mt-3"
+      type="submit"
+      [disabled]="form.invalid"
+    >
+      Enviar formulario
+    </button>
+
+    <hr />
+
+    <p class="font-weight-bold">Acciones sobre el formulario</p>
+    <div class="actions-buttons">
+      <button
+        class="btn btn-warning"
+        type="button"
+        (click)="removeValidators()"
+      >
+        Eliminar validadores
+      </button>
+      <button class="btn btn-danger" type="button" (click)="setError()">
+        Set error
+      </button>
+      <button class="btn btn-secondary" type="button" (click)="disableForm()">
+        Desabilitar formulario
+      </button>
+      <button class="btn btn-info" type="button" (click)="resetForm()">
+        Restablecer formulario
+      </button>
+
+      <button class="btn btn-dark" type="button" (click)="fillForm()">
+        Rellenar formulario
+      </button>
+    </div>
+  </form>
+
+  {{ form.value | json }}
+
+  <div class="mt-4">
+    <div class="font-weight-bold">Formulario del servicio shared</div>
+    <div>
+      {{ formSvc.value | json }}
+    </div>
+  </div>
+  <div class="mt-4">
+    <div class="font-weight-bold">Dirty</div>
+    <div>
+      {{ form.dirty | json }}
+    </div>
+  </div>
+</div>
+
+<hr />
+
+<app-school-form></app-school-form>

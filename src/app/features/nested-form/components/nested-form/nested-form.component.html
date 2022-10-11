@@ -1,0 +1,143 @@
+<div class="container">
+  <h1>Nested form</h1>
+  <form [formGroup]="form" (ngSubmit)="onSubmit()">
+    <div class="form-row mb-3">
+      <label for="name" class="required">Nombre</label>
+      <input
+        class="form-control"
+        id="name"
+        type="text"
+        formControlName="name"
+        placeholder="Nombre"
+      />
+
+      <app-error-msg [control]="form.name"></app-error-msg>
+    </div>
+
+    <div class="form-row mb-3">
+      <label for="lastName" class="required">Apellido</label>
+      <input
+        class="form-control"
+        id="lastName"
+        type="text"
+        formControlName="lastName"
+        placeholder="Apellidos"
+      />
+      <app-error-msg [control]="form.lastName"></app-error-msg>
+    </div>
+
+    <app-error-msg [control]="form"></app-error-msg>
+
+    <div formGroupName="bankDetails" class="form-row mb-3">
+      <div class="col-md-6">
+        <label for="bankName">Nombre del banco</label>
+        <input
+          class="form-control"
+          id="bankName"
+          type="text"
+          formControlName="bankName"
+          placeholder="Nombre del banco"
+        />
+      </div>
+
+      <div class="col-md-6">
+        <label for="iban">IBAN</label>
+        <input
+          class="form-control"
+          id="iban"
+          type="text"
+          formControlName="iban"
+          placeholder="E.g.: ES 9121000418450200051332"
+        />
+        <app-error-msg [control]="form.iban"></app-error-msg>
+      </div>
+    </div>
+
+    <div formArrayName="address">
+      <div *ngFor="let group of form.address.controls; let i = index">
+        <div [formGroupName]="i" class="form-row mb-3">
+          <div class="col-md-4">
+            <label for="street" class="required">Calle</label>
+            <input
+              id="street"
+              type="text"
+              class="form-control"
+              formControlName="street"
+              placeholder="Calle"
+            />
+            <app-error-msg [control]="group.get('street')"></app-error-msg>
+          </div>
+          <div class="col-md-4">
+            <label for="number">Número</label>
+            <input
+              id="number"
+              type="number"
+              class="form-control"
+              formControlName="number"
+              placeholder="Número"
+            />
+          </div>
+
+          <div class="col-md-4">
+            <label for="zip">Código Postal</label>
+            <div class="d-flex">
+              <input
+                id="zip"
+                type="number"
+                class="form-control"
+                formControlName="zip"
+                placeholder="Código postal"
+              />
+
+              <button
+                class="btn btn-danger ml-1"
+                type="button"
+                (click)="form.removeAddress(i)"
+              >
+                Eliminar
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <button
+        class="btn btn-success mb-3"
+        type="button"
+        (click)="form.addAddress()"
+      >
+        Añadir nueva dirección
+      </button>
+    </div>
+
+    <div class="actions-buttons mb-3">
+      <button class="btn btn-primary" [disabled]="form.invalid">Enviar</button>
+      <button
+        class="btn btn-secondary"
+        type="button"
+        (click)="populateForm(mockForm)"
+      >
+        Rellenar formulario
+      </button>
+    </div>
+  </form>
+
+  {{ form.value | json }}
+
+  <hr />
+  <div>
+    <h2>Estado del formulario:</h2>
+    <p>
+      Touched:
+      {{ form.touched | json }}
+    </p>
+    <p>
+      Dirty:
+      {{ form.dirty | json }}
+    </p>
+    <p>
+      Valid:
+      {{ form.valid | json }}
+    </p>
+  </div>
+</div>

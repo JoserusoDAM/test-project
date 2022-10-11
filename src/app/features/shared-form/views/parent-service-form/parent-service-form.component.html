@@ -1,0 +1,39 @@
+<div class="container">
+  <h1>Shared Form Service</h1>
+  <form [formGroup]="form" (ngSubmit)="onSubmit()">
+    <app-general-info></app-general-info>
+    <app-secondary-info></app-secondary-info>
+
+    <div class="actions-buttons mb-3">
+      <button class="btn btn-primary" type="submit" [disabled]="form.invalid">
+        Enviar formulario
+      </button>
+
+      <button class="btn btn-secondary" type="button" (click)="form.reset()">
+        Reset form
+      </button>
+
+      <button
+        class="btn btn-dark"
+        type="button"
+        (click)="form.setValueForms(formData)"
+      >
+        Set values
+      </button>
+
+      <button class="btn btn-danger" type="button" (click)="clearValidators()">
+        Eliminar validadores
+      </button>
+
+      <button class="btn btn-info" type="button" (click)="addValidators()">
+        Añadir validador de contraseña
+      </button>
+    </div>
+  </form>
+
+  <p style="font-weight: bold" *ngIf="form.age.value >= 18">
+    El usuario es mayor de dad, tiene: {{ form.age.value }} años
+  </p>
+
+  {{ form.value | json }}
+</div>
