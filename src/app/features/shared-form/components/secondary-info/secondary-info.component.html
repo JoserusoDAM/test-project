@@ -1,4 +1,4 @@
-<fieldset [formGroup]="form">
+<fieldset [formGroup]="form.form">
   <div class="form-row">
     <div class="col-md-4 mb-3">
       <label for="age">Edad</label>
@@ -8,6 +8,20 @@
         id="age"
         placeholder="Edad"
         formControlName="age"
+      />
+
+      <app-error-msg [control]="form.age"></app-error-msg>
+    </div>
+    <div class="col-md-4 mb-3" *ngIf="form.form.contains('parentName')">
+      <label for="parentName" class="required"
+        >Nombre del tutor/responsable</label
+      >
+      <input
+        type="text"
+        class="form-control"
+        id="parentName"
+        placeholder="Nombre del tutor/responsable"
+        formControlName="parentName"
       />
 
       <app-error-msg [control]="form.age"></app-error-msg>

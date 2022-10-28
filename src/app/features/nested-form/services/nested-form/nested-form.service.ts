@@ -1,11 +1,8 @@
 import { Injectable } from '@angular/core';
 import {
-  AbstractControl,
-  FormArray,
-  FormControl,
-  FormGroup,
-  ValidationErrors,
-  ValidatorFn,
+  UntypedFormArray,
+  UntypedFormControl,
+  UntypedFormGroup,
   Validators,
 } from '@angular/forms';
 import {
@@ -18,7 +15,7 @@ import {
 @Injectable({
   providedIn: 'root',
 })
-export class NestedFormService extends FormGroup {
+export class NestedFormService extends UntypedFormGroup {
   constructor() {
     super(adressForm);
 
@@ -30,27 +27,27 @@ export class NestedFormService extends FormGroup {
   }
 
   get name() {
-    return this.get('name') as FormControl;
+    return this.get('name') as UntypedFormControl;
   }
 
   get lastName() {
-    return this.get('lastName') as FormControl;
+    return this.get('lastName') as UntypedFormControl;
   }
 
   get bankDetails() {
-    return this.get('bankDetails') as FormGroup;
+    return this.get('bankDetails') as UntypedFormGroup;
   }
 
   get bankName() {
-    return this.get('bankDetails.bankName') as FormGroup;
+    return this.get('bankDetails.bankName') as UntypedFormGroup;
   }
 
   get iban() {
-    return this.get('bankDetails.iban') as FormGroup;
+    return this.get('bankDetails.iban') as UntypedFormGroup;
   }
 
   get address() {
-    return this.get('address') as FormArray;
+    return this.get('address') as UntypedFormArray;
   }
 
   addAddress(): void {

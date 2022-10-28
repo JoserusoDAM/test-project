@@ -8,7 +8,7 @@ export const defaultInfo: ExtraInfoFormData = {
 
 export function createExtraInfoForm(
   extraInfo: ExtraInfoFormData = defaultInfo
-): FormGroup {
+) {
   return new FormGroup({
     title: new FormControl(extraInfo.title, [Validators.required]),
     level: new FormControl(extraInfo.level),

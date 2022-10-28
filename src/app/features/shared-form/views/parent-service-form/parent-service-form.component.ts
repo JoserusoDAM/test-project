@@ -20,9 +20,9 @@ export class ParentServiceFormComponent implements OnInit, OnDestroy {
   };
 
   ngOnInit(): void {
-    const sub = this.form.valueChanges.subscribe({
-      next: (v) => console.log(v),
-    });
+    const sub = this.form.form.valueChanges.subscribe((value) =>
+      console.log(value)
+    );
     this.subscription.add(sub);
   }
 
@@ -32,8 +32,8 @@ export class ParentServiceFormComponent implements OnInit, OnDestroy {
   }
 
   onSubmit(): void {
-    console.log(this.form.value);
-    this.form.reset();
+    console.log(this.form.form.value);
+    this.form.form.reset();
   }
 
   addValidators(): void {
@@ -42,11 +42,11 @@ export class ParentServiceFormComponent implements OnInit, OnDestroy {
   }
 
   clearValidators(): void {
-    for (const key in this.form.controls) {
-      this.form.get(key)?.clearValidators();
-      this.form.get(key)?.updateValueAndValidity();
+    for (const key in this.form.form.controls) {
+      this.form.form.get(key)?.clearValidators();
+      this.form.form.get(key)?.updateValueAndValidity();
     }
 
-    this.form.markAllAsTouched();
+    this.form.form.markAllAsTouched();
   }
 }

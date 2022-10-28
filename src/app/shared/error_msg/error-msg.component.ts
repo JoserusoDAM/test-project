@@ -1,5 +1,9 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { AbstractControl, FormControl } from '@angular/forms';
+import {
+  AbstractControl,
+  FormControl,
+  UntypedFormControl,
+} from '@angular/forms';
 
 @Component({
   selector: 'app-error-msg',
@@ -7,7 +11,7 @@ import { AbstractControl, FormControl } from '@angular/forms';
   styleUrls: ['./error-msg.component.css'],
 })
 export class ErrorMsgComponent implements OnInit {
-  @Input() control!: AbstractControl | FormControl | null;
+  @Input() control!: AbstractControl | UntypedFormControl | FormControl | null;
 
   constructor() {}
 

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormArray } from '@angular/forms';
+import { UntypedFormArray } from '@angular/forms';
 import { NestedFormService } from 'src/app/features/nested-form/services/nested-form/nested-form.service';
 import { createFormAdress } from '../../forms/adress-form.form';
 import {
@@ -44,8 +44,8 @@ export class NestedFormComponent implements OnInit {
     this.form.markAsDirty();
   }
 
-  setAddress(address: AddressNestedFormData[]): FormArray {
-    const formArray = new FormArray([]);
+  setAddress(address: AddressNestedFormData[]): UntypedFormArray {
+    const formArray = new UntypedFormArray([]);
     address.forEach((data) => formArray.push(createFormAdress(data)));
     return formArray;
   }

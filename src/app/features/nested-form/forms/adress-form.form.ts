@@ -1,8 +1,8 @@
 import {
   AbstractControl,
-  FormArray,
-  FormControl,
-  FormGroup,
+  UntypedFormArray,
+  UntypedFormControl,
+  UntypedFormGroup,
   ValidationErrors,
   ValidatorFn,
   Validators,
@@ -20,27 +20,27 @@ const defaultAddress: AddressNestedFormData = {
 
 export function createFormAdress(
   address: AddressNestedFormData = defaultAddress
-): FormGroup {
-  return new FormGroup({
-    street: new FormControl(address.street, [Validators.required]),
-    number: new FormControl(address.number),
-    zip: new FormControl(address.zip),
+): UntypedFormGroup {
+  return new UntypedFormGroup({
+    street: new UntypedFormControl(address.street, [Validators.required]),
+    number: new UntypedFormControl(address.number),
+    zip: new UntypedFormControl(address.zip),
   });
 }
 
 export const nameValidators = [Validators.required, Validators.minLength(2)];
 
 export const adressForm = {
-  name: new FormControl('', nameValidators),
-  lastName: new FormControl('', [Validators.required]),
-  bankDetails: new FormGroup({
-    bankName: new FormControl(''),
-    iban: new FormControl('', [
+  name: new UntypedFormControl('', nameValidators),
+  lastName: new UntypedFormControl('', [Validators.required]),
+  bankDetails: new UntypedFormGroup({
+    bankName: new UntypedFormControl(''),
+    iban: new UntypedFormControl('', [
       Validators.minLength(24),
       Validators.maxLength(24),
     ]),
   }),
-  address: new FormArray([]),
+  address: new UntypedFormArray([]),
 };
 
 export function crossValitator(): ValidatorFn {

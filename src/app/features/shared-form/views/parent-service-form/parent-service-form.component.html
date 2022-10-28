@@ -1,15 +1,23 @@
 <div class="container">
   <h1>Shared Form Service</h1>
-  <form [formGroup]="form" (ngSubmit)="onSubmit()">
+  <form [formGroup]="form.form" (ngSubmit)="onSubmit()">
     <app-general-info></app-general-info>
     <app-secondary-info></app-secondary-info>
 
     <div class="actions-buttons mb-3">
-      <button class="btn btn-primary" type="submit" [disabled]="form.invalid">
+      <button
+        class="btn btn-primary"
+        type="submit"
+        [disabled]="form.form.invalid"
+      >
         Enviar formulario
       </button>
 
-      <button class="btn btn-secondary" type="button" (click)="form.reset()">
+      <button
+        class="btn btn-secondary"
+        type="button"
+        (click)="form.form.reset()"
+      >
         Reset form
       </button>
 
@@ -35,5 +43,5 @@
     El usuario es mayor de dad, tiene: {{ form.age.value }} años
   </p>
 
-  {{ form.value | json }}
+  {{ form.form.value | json }}
 </div>

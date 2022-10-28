@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { FormGroup } from '@angular/forms';
+import { UntypedFormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-student-section',
@@ -7,7 +7,7 @@ import { FormGroup } from '@angular/forms';
   styleUrls: ['./student-section.component.css'],
 })
 export class StudentSectionComponent implements OnInit {
-  @Input() form!: FormGroup;
+  @Input() form!: UntypedFormGroup;
 
   constructor() {}
 

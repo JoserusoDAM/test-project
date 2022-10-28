@@ -1,6 +1,6 @@
 <div class="container">
   <h1>Reactive Forms</h1>
-  <form [formGroup]="form" (ngSubmit)="onSubmit()">
+  <form [formGroup]="form" (ngSubmit)="onSubmit($event)">
     <div class="form-row">
       <div class="col-md-4 mb-3">
         <label for="validationCustom01" class="required">Nombre</label>
@@ -151,6 +151,7 @@
       class="btn btn-primary mt-3"
       type="submit"
       [disabled]="form.invalid"
+      name="submit"
     >
       Enviar formulario
     </button>
@@ -187,13 +188,17 @@
   <div class="mt-4">
     <div class="font-weight-bold">Formulario del servicio shared</div>
     <div>
-      {{ formSvc.value | json }}
+      {{ formSvc.form.value | json }}
     </div>
   </div>
   <div class="mt-4">
     <div class="font-weight-bold">Dirty</div>
     <div>
       {{ form.dirty | json }}
+    </div>
+    <div class="font-weight-bold">Valid</div>
+    <div>
+      {{ form.valid | json }}
     </div>
   </div>
 </div>

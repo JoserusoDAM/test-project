@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import {
   FormArray,
-  FormBuilder,
   FormControl,
   FormGroup,
+  NonNullableFormBuilder,
   Validators,
 } from '@angular/forms';
 import { countries } from 'src/app/mocks/countries';
@@ -22,42 +22,47 @@ import { createExtraInfoForm } from '../../form/reactive-form.form';
 export class ReactiveFormComponent implements OnInit {
   countries = countries;
 
-  form: FormGroup = this.initForm();
+  form = this.initForm();
 
   get nameControl() {
-    return this.form.get('name') as FormControl;
+    return this.form.get('name') as FormControl<string>;
   }
 
   get lastNameControl() {
-    return this.form.get('lastName') as FormControl;
+    return this.form.get('lastName') as FormControl<string>;
   }
 
   get userNameControl() {
-    return this.form.get('userName') as FormControl;
+    return this.form.get('userName') as FormControl<string>;
   }
 
   get cityControl() {
-    return this.form.get('city') as FormControl;
+    return this.form.get('city') as FormControl<string>;
   }
 
   get countryControl() {
-    return this.form.get('country') as FormControl;
+    return this.form.get('country') as FormControl<string>;
   }
 
   get zipControl() {
-    return this.form.get('zip') as FormControl;
+    return this.form.get('zip') as FormControl<number>;
   }
 
   get termsControl() {
-    return this.form.get('terms') as FormControl;
+    return this.form.get('terms') as FormControl<boolean>;
   }
 
   get extraInfo() {
-    return this.form.get('extraInfo') as FormArray;
+    return this.form.get('extraInfo') as FormArray<
+      FormGroup<{
+        title: FormControl<string | null>;
+        level: FormControl<number | null>;
+      }>
+    >;
   }
 
   constructor(
-    private readonly fb: FormBuilder,
+    private readonly fb: NonNullableFormBuilder,
     public readonly formSvc: SharedFormService,
     public readonly canDeactivateFromGuard: CanDeactivateFromGuard
   ) {}
@@ -68,7 +73,7 @@ export class ReactiveFormComponent implements OnInit {
     return this.canDeactivateFromGuard.canDeactivateForm(this.form);
   }
 
-  initForm(): FormGroup {
+  initForm() {
     return this.fb.group({
       name: [
         '',
@@ -78,29 +83,54 @@ export class ReactiveFormComponent implements OnInit {
           Validators.maxLength(25),
         ],
       ],
-      lastName: [
-        '',
-        [
-          Validators.required,
-          Validators.minLength(3),
-          Validators.maxLength(25),
-        ],
-      ],
-      userName: ['', [Validators.required, Validators.email]],
-      city: [''],
-      country: ['', Validators.required],
-      zip: [
-        {
-          value: '123456',
-          disabled: true,
-        },
-      ],
-      terms: ['', Validators.requiredTrue],
-      extraInfo: this.fb.array([]),
+      // name: this.fb.control('', [
+      //   Validators.required,
+      //   Validators.minLength(3),
+      //   Validators.maxLength(25),
+      // ]),
+      // lastName: [
+      //   '',
+      //   [
+      //     Validators.required,
+      //     Validators.minLength(3),
+      //     Validators.maxLength(25),
+      //   ],
+      // ],
+      lastName: this.fb.control('', [
+        Validators.required,
+        Validators.minLength(3),
+        Validators.maxLength(25),
+      ]),
+      userName: this.fb.control('', [Validators.required, Validators.email]),
+      // userName: ['', [Validators.required, Validators.email]],
+      city: this.fb.control(''),
+      // city: [''],
+      country: this.fb.control('', [Validators.required]),
+      // country: ['', Validators.required],
+      zip: this.fb.control({ value: 0, disabled: true }),
+      // zip: [
+      //   {
+      //     value: 123456,
+      //     disabled: true,
+      //   },
+      // ],
+      terms: this.fb.control(false, [Validators.requiredTrue]),
+      // terms: [false, Validators.requiredTrue],
+      // extraInfo: this.fb.array([createExtraInfoForm()]),
+      extraInfo: this.fb.array<
+        FormGroup<{
+          title: FormControl<string | null>;
+          level: FormControl<number | null>;
+        }>
+      >([]),
     });
   }
 
-  onSubmit(): void {
+  onSubmit(event: SubmitEvent): void {
+    if (event.submitter?.getAttribute('name') === 'submit') {
+      console.log('Formulario enviado', this.form.value);
+    }
+
     this.form.markAllAsTouched();
     console.log(this.form.value);
     console.log(this.form.getRawValue());
@@ -178,13 +208,21 @@ export class ReactiveFormComponent implements OnInit {
     };
 
     this.form.patchValue(formData);
+
     this.form.setControl('extraInfo', this.setExtraInfo(formData.extraInfo));
     this.form.markAllAsTouched();
     this.form.markAsDirty();
   }
 
-  setExtraInfo(extraInfo: ExtraInfoFormData[]): FormArray {
-    const formArray = new FormArray([]);
+  setExtraInfo(extraInfo: ExtraInfoFormData[]) {
+    // FIXME: De esta forma me esta creando un formGroup vacio y no lo necesito
+
+    const formArray = new FormArray<
+      FormGroup<{
+        title: FormControl<string | null>;
+        level: FormControl<number | null>;
+      }>
+    >([]);
     extraInfo.forEach((data) => formArray.push(createExtraInfoForm(data)));
     return formArray;
   }

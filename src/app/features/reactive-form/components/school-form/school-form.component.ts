@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup } from '@angular/forms';
+import { UntypedFormGroup } from '@angular/forms';
 import { createSchoolForm } from '../../form/school-form.form';
 
 @Component({
@@ -8,14 +8,14 @@ import { createSchoolForm } from '../../form/school-form.form';
   styleUrls: ['./school-form.component.css'],
 })
 export class SchoolFormComponent implements OnInit {
-  form!: FormGroup;
+  form!: UntypedFormGroup;
 
   get studentForm() {
-    return this.form.get('studentForm') as FormGroup;
+    return this.form.get('studentForm') as UntypedFormGroup;
   }
 
   get teacherForm() {
-    return this.form.get('teacherForm') as FormGroup;
+    return this.form.get('teacherForm') as UntypedFormGroup;
   }
 
   constructor() {}
@@ -24,7 +24,15 @@ export class SchoolFormComponent implements OnInit {
     this.form = createSchoolForm();
   }
 
-  onSubmit(): void {
+  onSubmit($event: SubmitEvent): void {
+    if ($event.submitter?.getAttribute('name') === 'enviar') {
+      console.log('enviar');
+    }
+
+    if ($event.submitter?.getAttribute('name') === 'guardar') {
+      console.log('guardar');
+    }
+
     console.log(this.form.value);
   }
 

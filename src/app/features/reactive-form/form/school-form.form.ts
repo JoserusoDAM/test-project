@@ -1,7 +1,7 @@
-import { FormControl, FormGroup } from '@angular/forms';
+import { UntypedFormControl, UntypedFormGroup } from '@angular/forms';
 
-export function createSchoolForm(): FormGroup {
-  const form: FormGroup = new FormGroup({
+export function createSchoolForm(): UntypedFormGroup {
+  const form: UntypedFormGroup = new UntypedFormGroup({
     studentForm: createStudentForm(),
     teacherForm: createTeacherForm(),
   });
@@ -9,19 +9,19 @@ export function createSchoolForm(): FormGroup {
   return form;
 }
 
-export function createStudentForm(): FormGroup {
-  const form: FormGroup = new FormGroup({
-    name: new FormControl(''),
-    grade: new FormControl(''),
+export function createStudentForm(): UntypedFormGroup {
+  const form: UntypedFormGroup = new UntypedFormGroup({
+    name: new UntypedFormControl(''),
+    grade: new UntypedFormControl(''),
   });
 
   return form;
 }
 
-export function createTeacherForm(): FormGroup {
-  const form: FormGroup = new FormGroup({
-    name: new FormControl(''),
-    subject: new FormControl(''),
+export function createTeacherForm(): UntypedFormGroup {
+  const form: UntypedFormGroup = new UntypedFormGroup({
+    name: new UntypedFormControl(''),
+    subject: new UntypedFormControl(''),
   });
 
   return form;
